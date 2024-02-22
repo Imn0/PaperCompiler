@@ -5,6 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 class ImagePickerPage extends StatefulWidget {
+  const ImagePickerPage({super.key});
+
   @override
   _ImagePickerPageState createState() => _ImagePickerPageState();
 }
@@ -56,14 +58,14 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Reply"),
+              title: const Text("Reply"),
               content: Text(out),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text("Close"),
+                  child: const Text("Close"),
                 ),
               ],
             );

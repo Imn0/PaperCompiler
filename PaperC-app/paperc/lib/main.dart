@@ -1,24 +1,22 @@
-import 'dart:io';
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import './text_input.dart';
 import './photo_input.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PaperC',
       initialRoute: '/',
       routes: {
-        '/': (context) => HomeScreen(),
-        '/photo': (context) => ImagePickerPage(),
+        '/': (context) => const HomeScreen(),
+        '/photo': (context) => const ImagePickerPage(),
         '/text': (context) => MyWidget(
             defaultText: ModalRoute.of(context)!.settings.arguments as String),
       },
@@ -27,11 +25,13 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PaperC'),
+        title: const Text('PaperC'),
       ),
       body: Center(
         child: Column(
@@ -41,14 +41,14 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, '/photo');
               },
-              child: Text('Photo input'),
+              child: const Text('Photo input'),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/text',
                     arguments: "Your default text here");
               },
-              child: Text('Text input'),
+              child: const Text('Text input'),
             ),
           ],
         ),

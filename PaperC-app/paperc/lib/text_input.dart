@@ -5,8 +5,7 @@ import 'package:http/http.dart' as http;
 class MyWidget extends StatefulWidget {
   final String defaultText;
 
-  const MyWidget({Key? key, this.defaultText = "Default Text"})
-      : super(key: key);
+  const MyWidget({super.key, this.defaultText = "Default Text"});
 
   @override
   _MyWidgetState createState() => _MyWidgetState();
@@ -40,19 +39,22 @@ class _MyWidgetState extends State<MyWidget> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Reply"),
+              title: const Text("Reply"),
               content: Text(out),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text("Close"),
+                  child: const Text("Close"),
                 ),
               ],
             );
           },
         );
+        setState(() {
+          _response = 'Ok';
+        });
       } else {
         setState(() {
           _response = 'Error: ${response.statusCode}';
@@ -71,10 +73,10 @@ class _MyWidgetState extends State<MyWidget> {
       title: 'Text Input',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Send Text via REST GET'),
+          title: const Text('Compile !!!'),
         ),
         body: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               Expanded(

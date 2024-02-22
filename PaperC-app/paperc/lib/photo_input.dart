@@ -5,17 +5,21 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 class ImagePickerPage extends StatefulWidget {
+  const ImagePickerPage({super.key});
+
   @override
   _ImagePickerPageState createState() => _ImagePickerPageState();
 }
 
 class _ImagePickerPageState extends State<ImagePickerPage> {
+  var pickedFile = null;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
-        title: Text('Send Image via REST GET'),
+        title: const Text('Upload Photo'),
       ),
       body: Center(
         child: Column(
@@ -26,6 +30,10 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
             else
               Image.file(_image!),
             if (_response != null) Text(_response!),
+            ElevatedButton(
+              onPressed: sendImage,
+              child: const Text('Send'),
+            ),
           ],
         ),
       ),
@@ -56,31 +64,38 @@ class _ImagePickerPageState extends State<ImagePickerPage> {
   final picker = ImagePicker();
 
   Future getImageFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+    final _pickedFile = await picker.pickImage(source: ImageSource.camera);
 
-    if (pickedFile != null) {
+    if (_pickedFile != null) {
       setState(() {
+        pickedFile = _pickedFile;
         _image = File(pickedFile.path);
       });
-      sendImage(pickedFile.path);
     }
   }
 
   Future getImageFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final _pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
+    if (_pickedFile != null) {
       setState(() {
+        pickedFile = _pickedFile;
         _image = File(pickedFile.path);
       });
-      sendImage(pickedFile.path);
     }
   }
 
-  Future<void> sendImage(String imagePath) async {
-    // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint
+  Future<void> sendImage() async {
     final apiUrl = Uri.parse('https://paperc.693147180.xyz/ocr');
-    // final apiUrl = Uri.parse('https://paperc.693147180.xyz/test_empty');
+
+    if (_image == null) {
+      setState(() {
+        _response = 'No image selected.';
+      });
+      return;
+    }
+
+    final imagePath = _image!.path;
 
     try {
       var request = http.MultipartRequest('GET', apiUrl);
