@@ -14,14 +14,11 @@ def run_code(code, language_id):
         "stdin": ""
     }
 
-    # Send a POST request to Judge0 API
     response = requests.post(endpoint, json=data)
 
-    # Check if the request was successful (HTTP status code 201)
     if response.status_code == 201:
         submission_token = response.json()["token"]
 
-        # Poll for the submission status
         while True:
             result_endpoint = f"{endpoint}/{submission_token}"
             result_response = requests.get(result_endpoint)

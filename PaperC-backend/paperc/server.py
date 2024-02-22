@@ -46,8 +46,8 @@ def get_compile():
         return jsonify({'error': 'No code provided'})
     print(code)
 
-    # code = unidecode(code)
-    code = code.encode('utf-8', 'ignore')
+    code = unidecode(code)
+    # code = code.encode('utf-8', 'ignore')
     out = run_code(f'{code}', 54)
     test = {
         "out": out  
